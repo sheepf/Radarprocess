@@ -1,0 +1,35 @@
+{
+  "name": "mimo_pulse_compression_demo",
+  "metadata": {
+    "domain": "radar",
+    "stage": "linear-ir-demo"
+  },
+  "steps": [
+    {
+      "name": "load_echo",
+      "op": "load",
+      "outputs": ["echo"]
+    },
+    {
+      "name": "matched_filter",
+      "op": "convolve",
+      "inputs": ["echo"],
+      "outputs": ["compressed"]
+    },
+    {
+      "name": "beamforming",
+      "op": "beamform",
+      "inputs": ["compressed"],
+      "outputs": ["beamformed"],
+      "parameters": {
+        "array": "ula"
+      }
+    },
+    {
+      "name": "detect",
+      "op": "threshold",
+      "inputs": ["beamformed"],
+      "outputs": ["detections"]
+    }
+  ]
+}
